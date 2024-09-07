@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+    <div id="Maindiv">
+            <div id="result">
+                <textarea name="" id="TextEntered" maxlength="30"></textarea>
+                <textarea id="evaluatedValue"></textarea>
+            </div>
+        <div id="calculator" class="calculator">
+            <div class="NumberDiv">1</div>
+            <div class="NumberDiv">2</div>
+            <div class="NumberDiv">3</div>
+            <div class="NumberDiv">+</div>
+            <div class="NumberDiv">4</div>
+            <div class="NumberDiv">5</div>
+            <div class="NumberDiv">6</div>
+            <div class="NumberDiv">-</div>
+            <div class="NumberDiv">7</div>
+            <div class="NumberDiv">8</div>
+            <div class="NumberDiv">9</div>
+            <div class="NumberDiv">*</div>
+            <div class="NumberDiv">.</div>
+            <div class="NumberDiv">0</div>
+            <div class="NumberDiv">=</div>
+            <div class="NumberDiv">/</div>
+            <div class="NumberDiv">AC</div>
+            <div class="NumberDiv">cancel</div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let numberDivs = document.querySelectorAll(".NumberDiv");
+    //numberDiv.addEventListener("click",AddNumberToTheTextBox);
+
+    let TextArea = document.getElementById("TextEntered");
+    let result = document.getElementById("evaluatedValue");
+    let currentInput = '';
+    let calculatedResult = '';
+    let modifiedString ='';
+    numberDivs.forEach(div => 
+    {
+            div.addEventListener('click', () => 
+            {
+                const value = div.textContent;
+
+                if (value === 'AC') 
+                {
+                    currentInput = '';
+                    calculatedResult = '';
+                } 
+                else if (value === '=') 
+                {
+                    try 
+                    {
+                        calculatedResult = eval(currentInput).toString();
+                    } 
+                    catch 
+                    {
+                        currentInput = 'Error';
+                    }
+                } 
+                else if(value === 'cancel')
+                {
+                    modifiedString = currentInput.slice(0, -1);
+                    currentInput = modifiedString;
+                    calculatedResult = '';
+                }
+                else
+                {
+                    currentInput += value;
+                }
+
+                TextArea.value = currentInput;
+                result.value = calculatedResult;
+            });
+        });
+
+        TextArea.addEventListener('change', function() 
+        {
+            currentInput = TextArea.value;
+            calculatedResult = '';
+            result.value = '';
+        });
+</script>
+</html>
